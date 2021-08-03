@@ -8,9 +8,9 @@ import { AppComponent } from './app.component';
     AppComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule //Needed so that app runs correctly within a browser.
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [ AppComponent ] //Starting component for application start-up
 })
 export class AppModule { }
