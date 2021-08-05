@@ -1,18 +1,22 @@
 import { Component } from '@angular/core';
+import { IProduct } from './product';
+
 
 @Component({
-      selector: 'pm-products'
-    , templateUrl: './product-list.component.html'
+     selector: 'pm-products'
+    ,templateUrl: './product-list.component.html'
+    ,styleUrls: [ './product-list.component.css' ]
 })
 export class ProductListComponent{
-    pageTitle: string = 'Product List';
-    imageWidth: number = 50;
-    imageMargin: number = 2;
-    showImage: boolean = false;
+    public pageTitle: string = 'Product List';
+    public imageWidth: number = 50;
+    public imageMargin: number = 2;
+    public showImage: boolean = false;
+    public message: string = '';
 
     filter: string = 'cart';
 
-    products: any[] = [
+    products: IProduct[] = [
         {
             "id": 1,
             "name": "Leaf Rake",
@@ -68,4 +72,8 @@ export class ProductListComponent{
     toggleImage() : void {
         this.showImage = !this.showImage;
     };
+
+    onRatingClicked(message: string): void {
+        this.message = message;
+    }
 }
