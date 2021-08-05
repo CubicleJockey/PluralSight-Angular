@@ -18,7 +18,15 @@ export class ProductListComponent implements OnInit {
         console.log('OnInit life-cycle hook has fired.');
     }
 
-    filter: string = 'cart';
+    private _filter: string = 'cart';
+    get filter(): string{
+        return this._filter;
+    }
+
+    set filter(text: string) {
+        console.log(`Setting filter: [${text}]`);
+        this._filter = text;
+    }
 
     products: IProduct[] = [
         {
