@@ -16,9 +16,11 @@ export class ProductListComponent implements OnInit {
     
     ngOnInit(): void {
         console.log('OnInit life-cycle hook has fired.');
+        this.filter = 'cart';
     }
 
-    private _filter: string = 'cart';
+    private _filter: string = '';
+
     get filter(): string{
         return this._filter;
     }
@@ -26,9 +28,20 @@ export class ProductListComponent implements OnInit {
     set filter(text: string) {
         console.log(`Setting filter: [${text}]`);
         this._filter = text;
+
+        this.filteredProducts = this.filterProducts(this._filter);
     }
 
-    products: IProduct[] = [
+    filterProducts(filterBy: string): IProduct[] {
+        filterBy = filterBy.toLocaleLowerCase();
+        return this.products.filter((product:IProduct) => 
+            product.name.toLocaleLowerCase().includes(filterBy)
+        );
+    }
+
+    public filteredProducts: IProduct[] = [];
+
+    private products: IProduct[] = [
         {
             "id": 1,
             "name": "Leaf Rake",
