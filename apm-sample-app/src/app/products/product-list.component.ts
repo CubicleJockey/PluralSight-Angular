@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
 
 
@@ -7,12 +7,16 @@ import { IProduct } from './product';
     ,templateUrl: './product-list.component.html'
     ,styleUrls: [ './product-list.component.css' ]
 })
-export class ProductListComponent{
+export class ProductListComponent implements OnInit {
     public pageTitle: string = 'Product List';
     public imageWidth: number = 50;
     public imageMargin: number = 2;
     public showImage: boolean = false;
     public message: string = '';
+    
+    ngOnInit(): void {
+        console.log('OnInit life-cycle hook has fired.');
+    }
 
     filter: string = 'cart';
 
