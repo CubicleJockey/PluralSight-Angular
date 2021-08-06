@@ -16,13 +16,13 @@ export class ProductListComponent implements OnInit {
     public message: string = '';
 
     
-    constructor(private productService: ProductService){
+    constructor(private productService: ProductService) {
         this.products = this.productService.getProducts();
     }
 
     ngOnInit(): void {
         console.log('OnInit life-cycle hook has fired.');
-        this.filter = 'cart';
+        this.filteredProducts = this.products;
     }
 
     private _filter: string = '';
