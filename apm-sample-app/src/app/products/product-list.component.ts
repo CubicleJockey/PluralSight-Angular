@@ -99,6 +99,6 @@ export class ProductListComponent implements OnInit {
     };
 
     onRatingClicked(message: string): void {
-        this.message = message;
+        this.pageTitle = `Product List: ${message}`;
     }
 }
