@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscriber } from 'rxjs';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
 
@@ -8,21 +10,35 @@ import { ProductService } from './product.service';
     ,templateUrl: './product-list.component.html'
     ,styleUrls: [ './product-list.component.css' ]
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
     public pageTitle: string = 'Product List';
     public imageWidth: number = 50;
     public imageMargin: number = 2;
     public showImage: boolean = false;
     public message: string = '';
+    public errorMessage: string = '';
 
+    private products: IProduct[] = [];
+    public filteredProducts: IProduct[] = [];
     
-    constructor(private productService: ProductService) {
-        this.products = this.productService.getProducts();
-    }
+    private productSubscription!: Subscription;
+
+    constructor(private productService: ProductService) { }
 
     ngOnInit(): void {
         console.log('OnInit life-cycle hook has fired.');
-        this.filteredProducts = this.products;
+
+        this.productSubscription = this.productService.getProducts().subscribe({
+            next: products => {
+                this.products = products;
+                this.filteredProducts = this.products
+            },
+            error: err => this.errorMessage = err 
+        });
+    }
+
+    ngOnDestroy(): void {
+        this.productSubscription?.unsubscribe();
     }
 
     private _filter: string = '';
@@ -45,8 +61,7 @@ export class ProductListComponent implements OnInit {
         );
     }
 
-    private products: IProduct[];
-    public filteredProducts: IProduct[] = [];
+
 
     
 
