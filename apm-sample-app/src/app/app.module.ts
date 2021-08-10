@@ -13,6 +13,7 @@ import { WelcomeComponent } from './home/welcome.component';
 
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
+import { ProductDetailGuard } from './products/product-detail.guard';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
     ,ConvertToSpacesPipe
     ,StarComponent
     ,WelcomeComponent
-    ,ProductDetailComponent, PageNotFoundComponent
+    ,ProductDetailComponent
+    ,PageNotFoundComponent
   ],
   imports: [
      BrowserModule //Needed so that app runs correctly within a browser.
@@ -29,7 +31,10 @@ import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.co
     ,HttpClientModule
     ,RouterModule.forRoot([/*First Match Wins*/
        { path: 'products', component: ProductListComponent }
-      ,{ path: 'products/:id', component: ProductDetailComponent }
+      ,{ path: 'products/:id'
+        ,canActivate: [ ProductDetailGuard ]
+        ,component: ProductDetailComponent 
+       }
       ,{ path: 'welcome', component: WelcomeComponent }
       ,{ path: '', redirectTo: 'welcome', pathMatch: 'full' }
       ,{ path: '**', component: PageNotFoundComponent }
