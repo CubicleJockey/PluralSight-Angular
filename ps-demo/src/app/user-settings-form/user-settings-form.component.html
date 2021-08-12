@@ -1,6 +1,6 @@
 <div class="container">
     <h2>User Settings</h2>
-    <form #userForm="ngForm" ngNativeValidate (ngSubmit)="onSubmit(userForm)">
+    <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
         <div class="form-group">
             <label for="name">Name: </label>
             <input [(ngModel)]="userSettings.name" 
@@ -14,8 +14,10 @@
                    placeholder="Enter Name Here"
                    #nameInput
                    #nameInputModelProperties="ngModel"
+                   [class.field-error]="userForm.submitted && nameInputModelProperties.invalid"
+                   (blur)="onBlur(nameInputModelProperties)"
                    />
-            <div [hidden]="nameInputModelProperties.valid || nameInputModelProperties.untouched"
+            <div [hidden]="!userForm.submitted || nameInputModelProperties.valid"
                  class="alert alert-danger">
                 Enter a name, that begins with A and is between 3 - 6 characters.
             </div>

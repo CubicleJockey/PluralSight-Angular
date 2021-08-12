@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { NgForm, NgModel } from '@angular/forms';
 import { IUserSettings } from '../data/user-settings';
 
 @Component({
@@ -38,8 +38,12 @@ export class UserSettingsFormComponent implements OnInit {
    this.userSettings = { ... this.originalUserSettings };
   }
 
-  onSubmit(form: NgForm) {
-    console.log(form.value);
-    console.log(form.valid);
+  onSubmit(userForm: NgForm) {
+    console.log(userForm.value);
+    console.log(`User Settings Form is: ${userForm.valid}`);
+  }
+
+  onBlur(control: NgModel){
+    console.log(`onBlur triggered for [${control.name}], is valid: ${control.valid} `);
   }
 }
