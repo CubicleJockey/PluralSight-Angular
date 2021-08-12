@@ -1,7 +1,8 @@
 export interface IUserSettings {
-     name: string
-    ,emailOffers: boolean
-    ,interfaceStyles: string
-    ,subscriptionType: string
-    ,notes: string
+     name: string | null
+    ,age: number | null
+    ,emailOffers: boolean | null
+    ,interfaceStyles: string | null
+    ,subscriptionType: string | null
+    ,notes: string | null
 }

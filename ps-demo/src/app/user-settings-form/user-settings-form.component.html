@@ -1,9 +1,49 @@
 <div class="container">
     <h2>User Settings</h2>
-    <form>
+    <form #userForm="ngForm" ngNativeValidate (ngSubmit)="onSubmit(userForm)">
         <div class="form-group">
             <label for="name">Name: </label>
-            <input [(ngModel)]="userSettings.name" id="name" name="name" class="form-control" placeholder="Enter Name Here"/>
+            <input [(ngModel)]="userSettings.name" 
+                   required
+                   pattern="A.*"
+                   minlength="3"
+                   maxlength="6"
+                   id="name" 
+                   name="name" 
+                   class="form-control" 
+                   placeholder="Enter Name Here"
+                   #nameInput
+                   #nameInputModelProperties="ngModel"
+                   />
+            <div [hidden]="nameInputModelProperties.valid || nameInputModelProperties.untouched"
+                 class="alert alert-danger">
+                Enter a name, that begins with A and is between 3 - 6 characters.
+            </div>
+            <p><code>{{ nameInput.className }}</code></p>
+            <ul style="list-style: none;">
+                <li>Dirty: <code>{{ nameInputModelProperties.dirty }}</code></li>
+                <li>Pristine: <code>{{ nameInputModelProperties.pristine }}</code></li>
+                <li>Touched: <code>{{ nameInputModelProperties.touched }}</code></li>
+                <li>Untouched: <code>{{ nameInputModelProperties.untouched }}</code></li>
+                <li>Valid: <code>{{ nameInputModelProperties.valid }}</code></li>
+                <li>Invalid: <code>{{ nameInputModelProperties.invalid }}</code></li>
+            </ul>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input [(ngModel)]="userSettings.age"
+                   id="age" 
+                   name="age"
+                   type="number"
+                   class="form-control"
+                   placeholder="0"
+                   min="0"
+                   max="120"
+                   required
+                   #ageInput
+                />
+            <p><code>{{ ageInput.className }}</code></p>
         </div>
 
         <div class="form-group">
@@ -12,8 +52,11 @@
                         class="form-check-input" 
                         type="checkbox" 
                         id="email-special-offers"
-                        name="email-special-offers" />
+                        name="email-special-offers" 
+                        #emailOfferInput
+                        />
                 <label for="email-special-offers" class="form-check-label">Email Special Offers</label>
+                <p><code>{{  emailOfferInput.className }}</code></p>
             </div>
         </div>
 
@@ -23,49 +66,90 @@
                 <input [(ngModel)]="userSettings.interfaceStyles"
                        class="form-check-input" type="radio" 
                        name="interface-style" id="light-interface"
-                       value="light"/>
+                       value="light" 
+                       #interfaceStylesLightInput
+                       />
                 <label for="light-interface" class="form-check-label">Light</label>
+                &nbsp;<code>{{ interfaceStylesLightInput.className }}</code>
             </div>
             <div class="form-check">
                 <input [(ngModel)]="userSettings.interfaceStyles"
                        class="form-check-input" type="radio" 
                        name="interface-style" id="medium-interface"
-                       value="medium"/>
+                       value="medium"
+                       #interfaceStylesMediumInput
+                       />
                 <label for="medium-interface" class="form-check-label">Medium</label>
+                &nbsp;<code>{{ interfaceStylesMediumInput.className }}</code>
             </div>
             <div class="form-check">
                 <input [(ngModel)]="userSettings.interfaceStyles"
                        class="form-check-input" type="radio" 
                        name="interface-style" id="dark-interface"
-                       value="dark" />
+                       value="dark" 
+                       #interfaceStylesDarkInput
+                       />
                 <label for="dark-interface" class="form-check-label">Dark</label>
+                &nbsp;<code>{{ interfaceStylesDarkInput.className }}</code>
             </div>
         </div>
 
         <div class="form-group">
             <label for="subscription-type">Subscription Type</label>
             <select [(ngModel)]="userSettings.subscriptionType" name="subscriptionType"
-                    class="form-control" id="subscription-type">
+                    class="form-control" id="subscription-type"
+                    #subscriptionTypeInput
+                    >
                 <option>Monthly</option>
                 <option>Annual</option>
                 <option>Lifetime</option>
             </select>
+            <p><code>{{ subscriptionTypeInput.className }}</code></p>
         </div>
 
         <div class="form-group">
             <label for="notes">Notes:</label>
-            <textarea [(ngModel)]="userSettings.notes" id="notes" name="notes" class="form-control" rows="3"></textarea>
+            <textarea [(ngModel)]="userSettings.notes" 
+                      id="notes" 
+                      name="notes" 
+                      class="form-control" 
+                      rows="3"
+                      placeholder="Add notes here"
+                      #notesInput
+                      ></textarea>
+            <p><code>{{ notesInput.className }}</code></p>
         </div>
 
         <br/>
-        <button class="btn btn-primary">Send</button>
+        <button class="btn btn-primary" type="submit">Send</button>
     </form>
 </div>
 
 <br />
-<h5>Original User Settings</h5>
+<h5>ngForm variable values <code>(#userForm.values)</code></h5>
+<p>{{ userForm.value | json }}</p>
+
+<p>
+    The properties <code>valid, invalid, pristine, dirty, touched, untouched</code>
+    work at the form and individual form-control level.
+</p>
+
+<br />
+<h5>Is ngForm valid? <code>(#userForm.valid | #userForm.invalid)</code></h5>
+<p>{{ userForm.valid }} | {{ userForm.invalid}}</p>
+
+<br />
+<h5>Is ngForm pristine? <code>(#userForm.pristine | #userForm.dirty)</code></h5>
+<p>{{  userForm.pristine }} | {{ userForm.dirty }}</p>
+
+<br />
+<h5>Is form touched? <code>(#userForm.touched | #userForm.untouched)</code></h5>
+<p>{{ userForm.touched }} | {{userForm.untouched }}</p>
+
+<br />
+<h5>Original User Settings <code>(this.originalUserSettings)</code></h5>
 <p>{{ originalUserSettings | json }} </p>
 
 <br />
-<h5>Form User Settings</h5>
+<h5>Form User Settings <code>(this.UserSettings)</code></h5>
 <p>{{ userSettings | json }}</p>
