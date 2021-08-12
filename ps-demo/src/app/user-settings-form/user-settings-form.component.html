@@ -61,4 +61,11 @@
         <button class="btn btn-primary">Send</button>
     </form>
 </div>
-{{ userSettings | json }}
+
+<br />
+<h5>Original User Settings</h5>
+<p>{{ originalUserSettings | json }} </p>
+
+<br />
+<h5>Form User Settings</h5>
+<p>{{ userSettings | json }}</p>
